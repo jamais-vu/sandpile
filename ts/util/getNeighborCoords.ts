@@ -6,13 +6,15 @@ import { Coord } from './types';
  * Def: Given a cell C with coordinates (x, y), its VON NEUMANN NEIGHBORS are
  * the cells directly above, left, right, and below cell C.
  *
- * Diagram:
- *             x - 1           x           x + 1
- *  y - 1  |            | (x, y - 1)  |            |
- *  y      | (x - 1, y) | C = (x, y)  | (x + 1, y) |
- *  y + 1  |            | (x, y + 1)  |            |
+ * Neighbors of the cell (x, y):
  *
- * The cell C = (x, y) has neighbors: (x, y-1), (x-1, y), (x+1, y) and (x, y+1).
+ *   +------------+------------+------------+
+ *   |            | (x, y + 1) |            |
+ *   +------------+------------+------------+
+ *   | (x - 1, y) |   (x, y)   | (x + 1, y) |
+ *   +------------+------------+------------+
+ *   |            | (x, y - 1) |            |
+ *   +------------+------------+------------+
  */
 
 /** Gets von Neumann neighbors of the given coordinate ij.
