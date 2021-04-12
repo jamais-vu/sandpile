@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Abelian Sandpile</title>
+    <!-- TODO: create favicon -->
+    <!-- <link rel="icon" href="images/favicon.png"> -->
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+
+  <body>
+    <div class="toolbar" id="toolbar">
+      <h1>Abelian Sandpile</h1>
+      <span id="windowSizeAlert">
+        <!-- Intentionally blank. "script.js" will add text here if the window
+             size is below a certain width or height. -->
+      </span>
+
+      <!-- Buttons for transitioning the grid forward/backward. -->
+      <span id="stepButtonsContainer" class="buttonsContainer">
+
+        <button id="pauseButton">Play</button>
+
+        <span id="stepInputFormContainer">
+          <form name="stepInputForm">
+            <label for="stepInput">Go to step:</label>
+            <input type="number" id="stepInput" name="stepInput" min="0" max="9999">
+            <input type="button" id="stepInputSubmit" value="Go to">
+          </form>
+        </span>
+
+        <!-- Displays current step. -->
+        <span id="stepCountContainer">
+          <span id="stepCountLabel">Steps:</span>
+          <span id="stepCountText">0</span> <!-- Modified by "script.js" -->
+        </span>
+
+      </span>
+
+    </div>
+
+
+    <!-- The canvas we draw our grid on. -->
+    <canvas id="gridCanvas">
+      <p>If this doesn't show, your browser didn't load canvas.</p>
+    </canvas>
+
+    <script type="module" src="js/script.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,46 @@
+html {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin-top: 0px;
+  font-size: smaller;
+  /* Hides the scrollbars. Grid should fit on page, but sometimes the canvas
+     itself is still large enough to cause the browser to display scrollbars. */
+  overflow: hidden;
+}
+
+h1 {
+  letter-spacing: -1px; /* I like the look. */
+  display: inline;
+}
+
+#windowSizeAlert {
+  margin: 0;
+  font-size: smaller;
+}
+
+#stepButtonsContainer {
+  margin-left: 5px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+#pauseButton {
+  /* Set this so button doesn't change size when it says "Play" vs "Pause". */
+  width: 4em;
+}
+
+form {
+  display: inline; /* Forms appear inline inside their respective containers. */
+}
+
+canvas {
+  /*margin: 0px;*/
+  /* Normally, double-clicking with the mouse will highlight text on the page.
+     This disables that feature for the canvas. */
+  user-select: none;
+}
