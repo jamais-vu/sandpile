@@ -19,8 +19,6 @@ import { getRandomInteger } from './util/random';
  * This is pretty messy and confusing. Right now the CellularAutomaton class
  * just deep copies the grid prior to transitioning, to store previous states. */
 
-let BOUNDS: Object = {};
-
 /** Goes through one "stable, add grain, topple until stable" iteration.
  * This assumes the given grid is stable (but works in either case? IDK).
  *
