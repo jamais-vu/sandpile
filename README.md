@@ -161,7 +161,7 @@ After starting the server, navigate your web browser to <http://localhost:8080/i
 
 Would be a strong proof-of-concept and I'd probably learn even more about abstraction.
 
-Using Would significantly improve structure and organization `gol-webapp`
+Using the `Controller` and `Drawing` classes we define here would probably significantly improve structure and organization of `gol-webapp`, too.
 
 
 ### Parallel Programming 
