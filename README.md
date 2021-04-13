@@ -67,10 +67,10 @@ TODO: This could be more clear.
 3. If at least one cell in the grid is *unstable* (has four or more grains), then the grid is unstable.<sup>1</sup>
 4. We pick an arbitrary unstable cell<sup>2</sup> and *topple* it: reduce its grain count by four, and add one grain to each of its neighbors. For cells which have four neighbors, this process does not alter the total count of grains in the grid; however, for cells on the sides or corners of the grid this process decreases the total count of grains in the grid. They "fall off" the edges.<br>
 5. When we topple an unstable cell, the grain added to each neighbor may make one or more of those neighbors also unstable. We topple these newly-unstable cells (an *avalanche*), which in turn may produce even more unstable cells, and so on.
-6. After all that toppling, the grid will eventually be stable<sup>3</sup>. Then the transition function has finished.<br> 
+6. After all that toppling, the grid will eventually be stable<sup>3</sup>. Then the transition function has finished.<br>
     <details> <summary>*Click to expand transition function footnotes*</summary>
     1: Technically, when we reach part (3) for the first time, there is at most one cell which could be unstable: the cell we added a grain to.<br>
-    2: The final stable state of the grid is not dependent on the order in which we topple unstable cells; i.e. toppling of cells is commutative. In other words, a grid has only one possible final stable state, and this state is uniquely-determined as soon as the transition function adds one grain to the grid, before even a single unstable cell has been toppled.<br>
+    2: The final stable state of the grid is not dependent on the order in which we topple unstable cells; i.e. toppling of cells is commutative (see Theorem 2.1 of ref [[1]](#ref-identity-of-abelian-sandpile-group) if you want a proof of this). In other words, a grid has only one possible final stable state, and this state is uniquely-determined as soon as the transition function adds one grain to the grid, before even a single unstable cell has been toppled.<br>
     3: (TODO: It's intuitive to me but I'd like a simple proof to include here.)<br>
 
     </details>
@@ -169,7 +169,7 @@ Using the `Controller` and `Drawing` classes we define here would probably signi
 Since toppling a cell in the grid only affects that cell's immediate neighbors, we can [partition](https://en.wikipedia.org/wiki/Partition_of_a_set) the grid into several subsets of cells, where any two cells in the same subset are _independent_ (do not share neighbors). This means that, for each subset, we can simultaneously topple all cells in the subset without worrying about potential conflicts from concurrent topple processes accessing or modifying the same neighbor.  
    ![](./images/parallel-sandpile-paper-fig1.png "Partition of a 5 x 5 grid.")  
    <sub>*Partition of a 5 x 5 grid. No two cells of the same color share a neighbor.*</sub><br>
-   <sub>*(Image credit: P. Vahagn, P. Suren, and N. Hayk [[1]](#ref-parallel-sandpile))*</sub>
+   <sub>*(Image credit: P. Vahagn, P. Suren, and N. Hayk [[2]](#ref-parallel-sandpile))*</sub>
 
 I want to do this because it's a neat solution, and I'd like to become more familiar with parallel programming.
 
@@ -192,7 +192,6 @@ Unlike the grid, there is no "edge" for grains to fall off and be lost from the 
 - After I test that it's working, I'd like to visualize the vertices and edges, and animate transitions. That sounds like a good challenge; more complex than drawing a bunch of rectangles.
 
 ## References
-  Author(s) Initial(s). Surname(s), “Title of thesis or dissertation,” Type of thesis (Ph.D. dissertation or M.S. thesis), Abbrev. Dept., Abbrev. Univ., City of University, (U.S. State or Country if the City is not 'well known'), Year of Publication. Accessed on: Abbrev. Month. Day, Year. [Type of medium]. Available: site/path/file
+[1]<a name="ref-identity-of-abelian-sandpile-group"></a> N. Doman, "The Identity of the Abelian Sandpile Group", Bachelor Thesis in Mathematics, Faculty of Science and Engineering, University of Groningen, Groningen, Netherlands, 2020. Available: https://fse.studenttheses.ub.rug.nl/21391/. 
 
-[1]<a name="ref-identity-of-abelian-sandpile-group"></a>N. Doman, "The Identity of the Abelian Sandpile Group", Bachelor Thesis in Mathematics, Faculty of Science and Engineering, University of Groningen, Groningen, Netherlands, 2020. Available: https://fse.studenttheses.ub.rug.nl/21391/. 
 [2]<a name="ref-parallel-sandpile"></a> P. Vahagn, P. Suren, and N. Hayk,  "The Investigation of Models of Self-Organized Systems by Parallel Programming Methods Based on the Example of an Abelian Sandpile Model", in Proceedings of CSIT 2013: 9th International Conference on Computer Science and Information Technologies, 23-27 September, 2013, Yerevan, Armenia. Available: https://csit.am/2013/proceedings.php.
