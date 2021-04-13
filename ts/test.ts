@@ -6,7 +6,6 @@ import './util/test/getNeighborCoords.test';
 import './util/test/minusOneIfEven.test';
 
 /* Tests for graph implementation. */
-// TODO: Temporarily disabled, since we're not developing it at the moment.
 import './graph/test/Point.test';
 import './graph/test/Vertex.test';
 import './graph/test/HashMap.test';
