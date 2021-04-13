@@ -131,9 +131,11 @@ You can view the animation on the web, or clone this repository and host your ow
 
 ### Local Server
 
-You can run this simulation locally on your computer by cloning the repository `sandpile` git repository and hosting `index.html` on a local server.
+Run this simulation on your computer by cloning the repository and hosting `index.html` on a local server.
 
-If you're unsure how to do that, 
+<details>
+<summary>Expand this if you want to host it locally, but are unfamiliar with how to do so.</summary>
+
 I use the NodeJS package [`http-server`](https://github.com/http-party/http-server), because it's very simple.
 
 ```bash
@@ -145,7 +147,7 @@ $ npm install http-server
 
 # Navigate to the sandpile directory.
 $ cd sandpile
-
+e
 # Start the HTTP server. It automatically uses 'index.html'
 # The '-c-1' option disables caching (useful if you are editing the web page).
 $ http-server -c-1
@@ -154,6 +156,7 @@ $ http-server -c-1
 ```
 
 After starting the server, navigate your web browser to <http://localhost:8080/index.html> and you're done.
+</details>
 
 ## Future Development
 
