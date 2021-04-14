@@ -68,7 +68,10 @@ TODO: This could be more clear.
 4. We pick an arbitrary unstable cell<sup>2</sup> and *topple* it: reduce its grain count by four, and add one grain to each of its neighbors. For cells which have four neighbors, this process does not alter the total count of grains in the grid; however, for cells on the sides or corners of the grid this process decreases the total count of grains in the grid. They "fall off" the edges.<br>
 5. When we topple an unstable cell, the grain added to each neighbor may make one or more of those neighbors also unstable. We topple these newly-unstable cells (an *avalanche*), which in turn may produce even more unstable cells, and so on.
 6. After all that toppling, the grid will eventually be stable<sup>3</sup>. Then the transition function has finished.<br>
-    <details> <summary>*Click to expand transition function footnotes*</summary>
+    <details> 
+    
+    <summary><i>Click to expand transition function footnotes<i></summary>
+    
     1: Technically, when we reach part (3) for the first time, there is at most one cell which could be unstable: the cell we added a grain to.<br>
     2: The final stable state of the grid is not dependent on the order in which we topple unstable cells; i.e. toppling of cells is commutative (see Theorem 2.1 of ref [[1]](#ref-identity-of-abelian-sandpile-group) if you want a proof of this). In other words, a grid has only one possible final stable state, and this state is uniquely-determined as soon as the transition function adds one grain to the grid, before even a single unstable cell has been toppled.<br>
     3: (TODO: It's intuitive to me but I'd like a simple proof to include here.)<br>
