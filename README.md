@@ -70,7 +70,7 @@ TODO: This could be more clear.
 6. After all that toppling, the grid will eventually be stable<sup>3</sup>. Then the transition function has finished.<br>
     <details> 
     
-    <summary><i>Click to expand transition function footnotes<i></summary>
+    <summary><i>Click to expand transition function footnotes</i></summary>
     
     1: Technically, when we reach part (3) for the first time, there is at most one cell which could be unstable: the cell we added a grain to.<br>
     2: The final stable state of the grid is not dependent on the order in which we topple unstable cells; i.e. toppling of cells is commutative (see Theorem 2.1 of ref [[1]](#ref-identity-of-abelian-sandpile-group) if you want a proof of this). In other words, a grid has only one possible final stable state, and this state is uniquely-determined as soon as the transition function adds one grain to the grid, before even a single unstable cell has been toppled.<br>
