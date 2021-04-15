@@ -15,13 +15,13 @@ export function newZerosGrid(rows: number, cols: number): Grid {
 }
 
 /** Returns a rows x cols Grid of random values.
- * Each cell has a random integer value v, where 0 <= v <= maxHeight - 1.
+ * Each cell has a random integer value v, where 0 <= v <= n.
  * @nosideffects
  */
-export function newRandomGrid(rows: number, cols: number, maxHeight: number = 4): Grid {
+export function newRandomGrid(rows: number, cols: number, n: number): Grid {
   let grid: Grid = [];
   for (let i = 0; i < rows; i++) {
-    grid.push(randomIntegerArray(0, maxHeight - 1, cols));
+    grid.push(randomIntegerArray(0, n, cols));
   }
   return grid;
 }

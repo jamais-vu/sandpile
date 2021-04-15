@@ -21,30 +21,16 @@ describe("grid", () => {
   });
 
   describe("newRandomGrid", () => {
-    it("All values in 5x7 newRandomGrid are at least 0 and at most maxHeight - 1", () => {
-      const maxHeight: number = 5;
-      const grid: Grid = newRandomGrid(5, 7, maxHeight);
+    it("All values in 5x7 newRandomGrid are at least 0 and at most n", () => {
+      const n: number = 3;
+      const grid: Grid = newRandomGrid(5, 7, n);
 
       /* We check each value in the grid. */
       for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
           const actual: number = grid[i][j];
           assert.isAtLeast(actual, 0, "Value is greater than or equal to 0");
-          assert.isAtMost(actual, maxHeight - 1, `Value is less than or equal to ${maxHeight - 1}`);
-        }
-      }
-    });
-
-    // This one isn't really necessary but I want tests to have full branch coverage.
-    it("Same as previous test but with default arg maxHeight = 4", () => {
-      const grid: Grid = newRandomGrid(5, 7);
-
-      /* We check each value in the grid. */
-      for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[0].length; j++) {
-          const actual: number = grid[i][j];
-          assert.isAtLeast(actual, 0, "Value is greater than or equal to 0");
-          assert.isAtMost(actual, 3, "Value is less than or equal to 3");
+          assert.isAtMost(actual, n, `Value is less than or equal to ${n}`);
         }
       }
     });
