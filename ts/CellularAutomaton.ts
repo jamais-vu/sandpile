@@ -1,4 +1,4 @@
-import { copyGrid } from './grid';
+import { copyGrid, newZerosGrid } from './grid';
 import { Grid, TransitionFunction } from './util/types';
 
 // TODO: Generic typing is to support further args for transition function.
@@ -36,6 +36,13 @@ export class CellularAutomaton {
     this.history = [];
   }
 
+  /** Create a CellularAutomaton with a rows x cols grid of zeros, and the given
+   * transition function.
+   */
+  static createEmptyCellularAutomaton(rows: number, cols: number, transitionFunction: TransitionFunction<Grid, any>): CellularAutomaton {
+    return new CellularAutomaton(newZerosGrid(rows, cols), transitionFunction);
+  }
+
   /** Moves the grid state backward one step. If at step 0, does nothing.
    * @modifies {this.grid}
    * @modifies {this.step}
@@ -55,11 +62,11 @@ export class CellularAutomaton {
    * @modifies {this.history}
    */
   nextStep(): void {
-    /* We push a deep copy to history because the transition function we use
-     * mutates grid, doesn't just return a new grid. In fact we don't really
-     * need the return value due ot that. */
-    this.history.push(copyGrid(this.grid));
-    this.transitionFunction(this.grid);
+    /* Because transitionFunction returns a new grid rather than modifies the
+     * existing grid, we can push `this.grid` to history and then set `this.grid`
+     * to the newly-returned grid without problems. */
+    this.history.push(this.grid);
+    this.grid = this.transitionFunction(this.grid);
     this.step += 1;
   }
 

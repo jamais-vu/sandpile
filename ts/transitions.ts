@@ -1,7 +1,13 @@
 import { getNeighborCoords } from './util/getNeighborCoords';
-import { createMinAndMaxBoundsObj, getMinAndMaxBounds } from './grid';
+import { copyGrid, createMinAndMaxBoundsObj, getMinAndMaxBounds } from './grid';
 import { Coord, Grid } from './util/types';
 import { getRandomInteger } from './util/random';
+
+/** @fileoverview Encapsulates logic for Abelian Sandpile transition function.
+ * `transition()` is a wrapper for determining the next state of the grid. The
+ * various steps in the transition are non-pure functions, so `transition()`
+ * creates a copy of the given grid. This permits `transition()` to be treated
+ * as a pure function, so we can export it without worrying about mutation. */
 
 /* TODO: Future: consolidate these into something which gives us more flexibility.
  * Ideally we could create a transition function which passes options to several
@@ -15,24 +21,26 @@ import { getRandomInteger } from './util/random';
  * Makes it difficult to tell which functions are used in non-test modules.
  * Find a solution. */
 
-/* TODO: How to handle mutation/returns in transition functions?
- * This is pretty messy and confusing. Right now the CellularAutomaton class
- * just deep copies the grid prior to transitioning, to store previous states. */
-
 /** Goes through one "stable, add grain, topple until stable" iteration.
  * This assumes the given grid is stable (but works in either case? IDK).
  *
  * By default adds grains to the center. Optional arg 'random' will instead add
  * to random vertex.
- * @modifies {grid}
+ *
+ * Grid is not mutated. A copy of the given grid is created, and then modified
+ * according to the sandpile's transition rules.
  */
-export function transition(grid: Grid, addGrainFunctionName?: string): void {
+export function transition(grid: Grid, addGrainFunctionName?: string): Grid {
+  let nextGrid: Grid = copyGrid(grid);
+  /* Add one grain to the grid. */
   if (addGrainFunctionName === 'random') {
-    addGrainRandom(grid);
+    addGrainRandom(nextGrid);
   } else {
-    addGrainCenter(grid);
+    addGrainCenter(nextGrid);
   }
-  toppleUntilStable(grid);
+  /* Then find and return the stable configuration. */
+  toppleUntilStable(nextGrid);
+  return nextGrid;
 }
 
 /** Adds one grain to the center of the grid.

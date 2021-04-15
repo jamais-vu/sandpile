@@ -4,18 +4,13 @@ import { assert } from 'chai';
 
 import { CellularAutomaton } from '../CellularAutomaton';
 import { newZerosGrid } from '../grid';
-import { transition } from '../transitions';
+import { transition as transitionCenter } from '../transitions';
 import { Grid } from '../util/types';
 
 /* Tests for CellularAutomaton class.
  * These depend on the `grid` module. If those tests don't pass, these won't.
  */
 describe("CellularAutomaton class", () => {
-  /* We define this so we don't have to deal with typing for the optional string arg. */
-  function transitionCenter(grid: Grid) {
-    transition(grid);
-  }
-
   // TODO: These are really really messy. But they pass lol.
 
   // TODO: Should write some for adding random grain too, not just to center.

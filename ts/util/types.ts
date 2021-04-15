@@ -29,11 +29,8 @@ export type VertexGroups = [
 /** A transition function maps a state (and optional inputs) to another state in the state space.
  *
  * Input type I is `void` by default to permit it being an optional argument.
- *
- * The return type include a union with `void` to support transition functions
- * which mutate state in-place and return nothing.
-  */
-export type TransitionFunction<S, I = void> = (state: S, input?: I) => S | void;
+ */
+export type TransitionFunction<S, I = void> = (state: S, input?: I) => S;
 
 
 // NOTE: Nothing after this is used. Just more playing around with types to get
