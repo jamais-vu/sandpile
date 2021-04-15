@@ -27,10 +27,14 @@ export function addEventListeners(controller: Controller) {
     }
   });
 
-  /* Disable pressing "Enter" key on step input, since that causes page reload. */
+  /* Pressing "Enter" goes to inputted step without reloading page. */
   stepInput.addEventListener('keydown', (event: KeyboardEvent) => {
     if (event.code === 'Enter') {
-      event.preventDefault();
+      event.preventDefault(); // Disable button submit, which would reload page
+      const desiredStep: number = parseInt(stepInput.value);
+      if ( !isNaN(desiredStep) ) {
+        controller.goToStep(desiredStep);
+      }
     }
   });
 
