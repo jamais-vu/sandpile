@@ -9,6 +9,27 @@ export type Coord = [number, number];
  */
 export type Grid = Array<Array<number>>;
 
+/** A transition function maps a state (and optional inputs) to another state in the state space.
+ *
+ * Input type I is `void` by default to permit it being an optional argument.
+ */
+export type TransitionFunction<S, I = void> = (state: S, input?: I) => S;
+
+/** Cell colors is a map of cellular automaton cell states to canvas fillstyle RGB strings. */
+export type CellColors = Map<number, string>;
+
+// TODO: Used for Controller/Drawing. Pick a better name.
+// TODO: We set TransitionFunction input type to any because it was causing problems
+// and it's more for fun that we even type these.
+/** If we know a cellular automaton is on a 2D grid, then all we need to fully
+ * define and draw its behavior is the initial cell values, the colors which each
+ * state should be drawn as, and the transition function. */
+export interface Rules {
+  maxInitialCellValue: number,
+  cellColors: CellColors;
+  transitionFunction: TransitionFunction<Grid, any>;
+}
+
 /** A VertexGroups is an Array of five Arrays of vertex ij coords.
  *
  * This is for some experimental stuff I'm doing, we create collections of
@@ -25,24 +46,6 @@ export type VertexGroups = [
   Array<Coord>,
   Array<Coord>
 ];
-
-/** A transition function maps a state (and optional inputs) to another state in the state space.
- *
- * Input type I is `void` by default to permit it being an optional argument.
- */
-export type TransitionFunction<S, I = void> = (state: S, input?: I) => S;
-
-/** Cell colors is a map of cellular automaton cell states to canvas fillstyle RGB strings. */
-export type CellColors = Map<number, string>;
-
-// TODO: Used for drawing. Pick a better name.
-/** We can define a grid cellular automaton with a map of cell states to colors
- * and a transition function. */
-export interface Definition<I = void> {
-  maxInitialCellValue: number,
-  cellColors: CellColors;
-  transitionFunction: TransitionFunction<Grid, I>;
-}
 
 // NOTE: Nothing after this is used. Just more playing around with types to get
 // a feel for what I can do.

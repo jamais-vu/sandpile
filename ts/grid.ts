@@ -1,7 +1,21 @@
-import { Coord, Grid, VertexGroups } from './util/types';
+import { minusOneIfEven } from './util/minusOneIfEven';
 import { randomIntegerArray } from './util/random';
+import { Coord, Grid, VertexGroups } from './util/types';
 
-/* Grid functions unrelated to any cellular automata rules. */
+/** @fileoverview Grid functions unrelated to any cellular automata rules. */
+
+/** Returns a grid fitted to the canvas, as determined by given cell size in pixels.
+ * The grid is randomly-populated with values between 0 and maxCellValue.
+ * If maxCellValue is 0, then the grid will be all zeros.
+ *
+ * TODO: We make sure the rows and cols are odd numbers for the sandpile, since
+ * we add grains to the center. But this can be an optional arg.
+ */
+export function createGridFittedToCanvas(canvas: HTMLCanvasElement, cellSize: number, maxCellValue: number = 0 ): Grid {
+  const rows: number = minusOneIfEven(Math.floor(canvas.height / cellSize));
+  const cols: number = minusOneIfEven(Math.floor(canvas.width / cellSize));
+  return newRandomGrid(rows, cols, maxCellValue);
+}
 
 /** Returns a rows x cols Grid of zeros.
  * @nosideffects
@@ -50,6 +64,12 @@ export function sumGrid(grid: Grid): number {
   return sum;
 }
 
+
+/* NOTE: EVerything below this line is experimental. Not in production. */
+
+// This is for constraining the grid indices we check, so we only spend time
+// checking indices which could possibly be non-empty.
+
 /** Returns the outermost i and j indices which are nonempty.)
  *
  * This is ONLY valid for sandpile grids where we add grains to the center. It
@@ -83,7 +103,6 @@ export function findBounds(grid: Grid): Coord {
   return [iOuter, jOuter]
 }
 
-
 /** Returns lower and upper bounds for active cells on the grid.
  * @nosideeffects
  */
@@ -98,12 +117,6 @@ export function getMinAndMaxBounds(grid: Grid): [Coord, Coord] {
 
   return [[iLower, iUpper], [jLower, jUpper]];
 }
-
-
-/* NOTE: EVerything below this line is experimental. Not in production. */
-
-// This is for constraining the grid indices we check, so we only spend time
-// checking indices which could possibly be non-empty.
 
 type Bounds = {
   lower: number;

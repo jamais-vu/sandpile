@@ -1,4 +1,4 @@
-import { CellColors, Coord, Definition, Grid } from '../util/types';
+import { CellColors, Coord, Grid, Rules } from '../util/types';
 
 /** @fileoverview This file contains the Game of Life rules, implemented as functions
  * which take an Array<Array<number>> representing the cell states.
@@ -9,11 +9,11 @@ import { CellColors, Coord, Definition, Grid } from '../util/types';
  */
 
 /* Game of Life only has color for 1 state. */
-export const cellColors: CellColors = new Map([
+const cellColors: CellColors = new Map([
   [1, 'red']
 ]);
 
-export const definition: Definition = {
+export const rules: Rules = {
   maxInitialCellValue: 1,
   cellColors: cellColors,
   transitionFunction: transition,

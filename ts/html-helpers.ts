@@ -2,6 +2,23 @@ import { Controller } from './Controller';
 
 // TODO: How do we work with HTML and TypeScript? There's got to be a better way.
 
+/** Fits the canvas to the window size, as a square or rectangle. */
+export function fitCanvasToWindow(canvas: HTMLCanvasElement, square: boolean = true) {
+  const fittedCanvasHeight: number = (window.innerHeight - canvas.offsetTop);
+  const fittedCanvasWidth: number = window.innerWidth - canvas.offsetLeft;
+
+  if (square === true) {
+    /* We make the canvas a square, using the lesser of its height and width. */
+    const canvasSize: number = Math.min(fittedCanvasWidth, fittedCanvasHeight);
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+  } else {
+    /* We make the canvas a rectangle fitted to the window. */
+    canvas.width = fittedCanvasWidth;
+    canvas.height = fittedCanvasHeight
+  }
+}
+
 const stepInput: HTMLInputElement = document.getElementById('stepInput') as HTMLInputElement;
 const stepInputSubmit: HTMLElement = document.getElementById('stepInputSubmit') as HTMLElement;
 const pauseButtonElement: HTMLElement = document.getElementById('pauseButton') as HTMLElement;
@@ -10,7 +27,7 @@ const windowSizeAlertElement: HTMLElement = document.getElementById('windowSizeA
 const canvasMouseCoords: HTMLElement = document.getElementById('canvasMouseCoords') as HTMLElement
 const canvasMouseCell: HTMLElement = document.getElementById('canvasMouseCell') as HTMLElement
 
-/* Adds event listeners for the given Drawing instance. */
+/* Adds event listeners for the given Controller instance. */
 export function addEventListeners(controller: Controller) {
   /* Pauses/unpauses grid transition. */
   pauseButtonElement.addEventListener('click', () => {
@@ -64,10 +81,7 @@ if (width < 700 || height < 600) {
   }
 }
 
-/* Shows the xy and ij position of the mouse as it moves on the canvas.
- *
- * This information is displayed in the `debugInfoTable` element.
- */
+/* Shows the xy and ij position of the mouse as it moves on the canvas. */
 export function updateCanvasMouseCoords(event: MouseEvent, cellSize: number) {
   const mouseCell = getCellFromCoords(event.offsetX, event.offsetY, cellSize);
   canvasMouseCoords.innerHTML = `${event.offsetX}, ${event.offsetY}`;

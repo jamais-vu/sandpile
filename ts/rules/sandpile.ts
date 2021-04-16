@@ -1,9 +1,9 @@
 import { getNeighborCoords } from '../util/getNeighborCoords';
 import { copyGrid, createMinAndMaxBoundsObj, getMinAndMaxBounds } from '../grid';
-import { CellColors, Coord, Definition, Grid } from '../util/types';
+import { CellColors, Coord, Grid, Rules } from '../util/types';
 import { getRandomInteger } from '../util/random';
 
-/** @fileoverview Encapsulates logic for Abelian Sandpile transition function.
+/** @fileoverview Rules for the for Abelian Sandpile transition function.
  * `transition()` is a wrapper for determining the next state of the grid. The
  * various steps in the transition are non-pure functions, so `transition()`
  * creates a copy of the given grid. This permits `transition()` to be treated
@@ -13,13 +13,13 @@ import { getRandomInteger } from '../util/random';
  * We divide 255 by cellState to determine how dark the cell color is.
  * The brighter a cell is, the more grains it has.
  * Except for white, which means the cell has 0 grains. */
-export const cellColors: CellColors = new Map([
+const cellColors: CellColors = new Map([
   [1, `rgb(${255 / 3}, ${255 / 3}, 0)`],
   [2, `rgb(${255 / 2}, ${255 / 2}, 0)`],
   [3, `rgb(255, 255, 0)`],
 ]);
 
-export const definition: Definition<string> = {
+export const rules: Rules = {
   maxInitialCellValue: 0,
   cellColors: cellColors,
   transitionFunction: transition,
