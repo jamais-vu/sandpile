@@ -4,10 +4,10 @@ import { assert } from 'chai';
 
 import { CellularAutomaton } from '../CellularAutomaton';
 import { newZerosGrid } from '../grid';
-import { transition as transitionCenter } from '../transitions';
+import { transition as transitionCenter } from '../rules/sandpile';
 import { Grid } from '../util/types';
 
-/* Tests for CellularAutomaton class.
+/* Tests for CellularAutomaton class. (For now, only sandpile transitions.)
  * These depend on the `grid` module. If those tests don't pass, these won't.
  */
 describe("CellularAutomaton class", () => {

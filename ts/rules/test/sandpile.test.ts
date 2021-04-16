@@ -1,10 +1,10 @@
 import * as mocha from 'mocha';
 import { assert } from 'chai';
 
-import { getNeighborCoords } from '../util/getNeighborCoords';
-import { newZerosGrid, sumGrid } from '../grid';
-import { addGrainCenter, addGrainRandom, getUnstableVertices, transition, topple, toppleUnstableVertices, toppleUntilStable, } from '../transitions';
-import { Coord, Grid } from '../util/types';
+import { getNeighborCoords } from '../../util/getNeighborCoords';
+import { newZerosGrid, sumGrid } from '../../grid';
+import { addGrainCenter, addGrainRandom, getUnstableVertices, transition, topple, toppleUnstableVertices, toppleUntilStable, } from '../sandpile';
+import { Coord, Grid } from '../../util/types';
 
 /* Tests for transitions on Grid version of sandpile, no LatticeGraph or Vertex class. */
 describe("transitions", () => {

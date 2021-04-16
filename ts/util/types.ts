@@ -32,6 +32,17 @@ export type VertexGroups = [
  */
 export type TransitionFunction<S, I = void> = (state: S, input?: I) => S;
 
+/** Cell colors is a map of cellular automaton cell states to canvas fillstyle RGB strings. */
+export type CellColors = Map<number, string>;
+
+// TODO: Used for drawing. Pick a better name.
+/** We can define a grid cellular automaton with a map of cell states to colors
+ * and a transition function. */
+export interface Definition<I = void> {
+  maxInitialCellValue: number,
+  cellColors: CellColors;
+  transitionFunction: TransitionFunction<Grid, I>;
+}
 
 // NOTE: Nothing after this is used. Just more playing around with types to get
 // a feel for what I can do.

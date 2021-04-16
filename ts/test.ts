@@ -14,5 +14,5 @@ import './graph/test/recursive.test';
 
 /* Tests for grid implementation. */
 import './test/grid.test';
-import './test/transitions.test';
 import './test/CellularAutomaton.test';
+import './rules/test/sandpile.test';

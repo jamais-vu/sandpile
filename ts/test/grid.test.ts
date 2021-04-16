@@ -34,6 +34,14 @@ describe("grid", () => {
         }
       }
     });
+
+    it("Calling newRandomGrid with n = 0 returns an empty grid", () => {
+      const n: number = 0
+      const emptyGrid: Grid = newZerosGrid(5, 7);
+      const randomGrid: Grid = newRandomGrid(5, 7, n);
+
+      assert.deepEqual(randomGrid, emptyGrid, "randomGrid is all zeros.");
+    });
   });
 
   describe("copyGrid", () => {
