@@ -1,9 +1,10 @@
 {
-  // "include": ["./ts"],
+  "include": ["./ts"],
   "exclude": [
-    // "ts/graph",
+    "ts/graph",
     "ts/grid-experimental",
-    "ts/SandpileGrid.ts",
+    "ts/test.ts",
+    "ts/**/test"
     ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
