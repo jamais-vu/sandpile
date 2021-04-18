@@ -23,7 +23,8 @@ Check it out!
     3. [Local Server](#local-server)
 4. [Future Development](#future-development)
     1. [Parallel Programming](#parallel-programming)
-    2. [Graph generalization](#graph-generalization)
+    2. [Reflection and Rotational Symmetry](#fourfold-symmetry)
+    3. [Graph generalization](#graph-generalization)
 5. [References](#references)
 
 ## Background
@@ -163,6 +164,8 @@ After starting the server, navigate your web browser to <http://localhost:8080/i
 
 ## Future Development
 
+Some cool ideas I may implement in my spare time. 
+
 ### Parallel Programming 
 
 Since toppling a cell in the grid only affects that cell's immediate neighbors, we can [partition](https://en.wikipedia.org/wiki/Partition_of_a_set) the grid into several subsets of cells, where any two cells in the same subset are _independent_ (do not share neighbors). This means that, for each subset, we can simultaneously topple all cells in the subset without worrying about potential conflicts from concurrent topple processes accessing or modifying the same neighbor.  
@@ -177,6 +180,17 @@ I want to do this because it's a neat solution, and I'd like to become more fami
 -  `createVertexGroups`, the function for creating independent subsets, passes tests. Have been experimenting with breaking up the transition functions to accept subsets of a grid, but I'll need to figure out how to call them in parallel to test them.
 
 -  Plan to check out [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). I'm not clear on whether that's truly "parallel" but it may suffice. May also play around with [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API).
+
+### Reflection and Rotational Symmetry
+
+![](./images/sandpile-symmetry.png "symmetries of the sandpile")<br>
+<sub>*Symmetries of the Abelian Sandpile*</sub>
+
+When adding grains to the center, the sandpile exhibits reflection symmetry over the axes, and (on a square grid) fourfold rotational symmetry. This means we only need to consider the origin, positive x and y axes, and one quadrant; then we can transform the quadrant to create the remainder of the sandpile. This would effectively cut down computing transitions by 1/4. 
+
+#### Status
+
+- Not started.
 
 ### Graph generalization of Sandpile grid
 
