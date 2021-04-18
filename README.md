@@ -58,7 +58,7 @@ A cell on a side of the grid has three neighbors, and a cell on a corner of the 
 
 #### Transition Function 
 
-In addition to the grid of cells, the Sandpile also has a *transition function`*. The transition function uses the current (time *t*) state of each cell in the grid to determine the next  state of the cell.
+In addition to the grid of cells, the Sandpile also has a *transition function*. The transition function uses the current (time *t*) state of each cell in the grid to determine the next  state of the cell.
 
 TODO: This could be more clear.
 
@@ -93,9 +93,9 @@ The application's entry point, `script.ts`, sets up a [Presentation-Abstraction-
                                   |
                                   v
                       ------- Controller -------
-Calls step methods.  |                         |  Passes CellularAutomaton state
-Gets grid/cells      |                         |    CellularAutomaton state
-  states.            |                         |    values.
+Calls step methods.  |                         |  Passes CellularAutomaton
+Gets grid/cells      |                         |    state to Drawing
+  states.            |                         |    
                      v                         v
             CellularAutomaton               Drawing
               (Abstraction)              (Presentation)
@@ -108,7 +108,7 @@ Gets grid/cells      |                         |    CellularAutomaton state
     - Handles transition logic of the cellular automaton.
     - Manages the complete history of the cellular automaton's state.
 - **Control**: `Controller` class 
-    -  Interface between the UI layer and the Model+View.
+    -  Interface between the UI and the Presentation+Abstraction.
     -  Class methods are called by `EventListeners` added in `script.ts`.
     -  Calls `CellularAutomaton` class methods and gets `CellularAutomaton` state data
     -  Passes `CellularAutomaton` state data to `Drawing` class methods.
@@ -162,13 +162,6 @@ After starting the server, navigate your web browser to <http://localhost:8080/i
 </details>
 
 ## Future Development
-
-### Re-implement Game of Life using `CellularAutomaton`
-
-Would be a strong proof-of-concept and I'd probably learn even more about abstraction.
-
-Using the `Controller` and `Drawing` classes we define here would probably significantly improve structure and organization of `gol-webapp`, too.
-
 
 ### Parallel Programming 
 
