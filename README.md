@@ -14,18 +14,20 @@ Check it out!
 ## Contents
 1. [Background](#background)
     1. [Motivation](#motivation)
-    2. [Sandpile Model](#sandpile-model)
+    2. [Abelian Sandpile Model](#abelian-sandpile-model)
         1. [Transition Function](#transition-function) 
 2. [Structure](#structure)
-3. [Usage](#usage)
+    1. [General framework: Presentation-Abstraction-Control](#general-framework-presentation-abstraction-control)
+    2. [Defining a Cellular Automaton](#defining-a-cellular-automaton)
+4. [Usage](#usage)
     1. [Usage Details](#usage-details)
     2. [View on Web](#view-on-web)
     3. [Local Server](#local-server)
-4. [Future Development](#future-development)
+5. [Future Development](#future-development)
     1. [Parallel Programming](#parallel-programming)
-    2. [Reflection and Rotational Symmetry](#fourfold-symmetry)
-    3. [Graph generalization](#graph-generalization)
-5. [References](#references)
+    2. [Reflection and Rotational Symmetry](#reflection-and-rotational-symmetry)
+    3. [Graph generalization of Sandpile grid](#graph-generalization-of-sandpile-grid)
+6. [References](#references)
 
 ## Background
 
@@ -38,6 +40,8 @@ I chose TypeScript because I had never used it before, and learning it felt like
 I also wanted to familiarize myself with [`mocha`](https://mochajs.org/) and [`chai`](https://www.chaijs.com/), and get in the habit of unit testing my project code as I write it.
 
 ### Abelian Sandpile Model
+
+*This section may be skipped if you're not interested in the specific dynamics of the sandpile. My implementation of the transition function is in `/rules/sandpile.ts`.*
 
 The Abelian Sandpile Model is a cellular automaton consisting of an _n_ x _m_ grid of cells. Each cell has an associated non-negative integer (the *state* of the cell) representing how many grains of sand are on that cell.
 
@@ -61,8 +65,6 @@ A cell on a side of the grid has three neighbors, and a cell on a corner of the 
 
 In addition to the grid of cells, the Sandpile also has a *transition function*. The transition function uses the current (time *t*) state of each cell in the grid to determine the next  state of the cell.
 
-TODO: This could be more clear.
-
 1. We add one grain to an arbitrary cell of the grid. 
 2. If every cell in the grid is *stable* (has at most three grains), then the grid as a whole is stable. In this case, the state transition is complete, and we are in the resultant state.
 3. If at least one cell in the grid is *unstable* (has four or more grains), then the grid is unstable.<sup>1</sup>
@@ -79,11 +81,13 @@ TODO: This could be more clear.
 
     </details>
 
-So the grid is stable at each timestep -- even though it may have contained an extremely-large number of unstable cells during the transition, the transition itself is not "at" a timestep.
+So the grid is stable at each timestep &mdash; even though it may have contained an extremely-large number of unstable cells during the transition, the states it moves through during the transition are not "at" a timestep.
 
 ## Structure
 
-The application's entry point, `script.ts`, sets up a [Presentation-Abstraction-Control](https://en.wikipedia.org/wiki/Presentation%E2%80%93abstraction%E2%80%93control) (PAC) framework: 
+### General framework: Presentation-Abstraction-Control
+
+The application's entry point, `script.ts`, sets up the canvas and a `Controller`. The `Controller` then handles all of the application's logic, according to a [Presentation-Abstraction-Control](https://en.wikipedia.org/wiki/Presentation%E2%80%93abstraction%E2%80%93control) (PAC) framework: 
 
 ```text
                             User Interface
@@ -95,8 +99,8 @@ The application's entry point, `script.ts`, sets up a [Presentation-Abstraction-
                                   v
                       ------- Controller -------
 Calls step methods.  |                         |  Passes CellularAutomaton
-Gets grid/cells      |                         |    state to Drawing
-  states.            |                         |    
+Gets grid/cells      |                         |    state to Drawing, to
+  states.            |                         |    draw on canvas.
                      v                         v
             CellularAutomaton               Drawing
               (Abstraction)              (Presentation)
@@ -114,7 +118,20 @@ Gets grid/cells      |                         |    state to Drawing
     -  Calls `CellularAutomaton` class methods and gets `CellularAutomaton` state data
     -  Passes `CellularAutomaton` state data to `Drawing` class methods.
 
-TODO: Explain the secondary modules, and how we implement the sandpile in this framework.
+### Defining a Cellular Automaton
+
+The `/rules` directory contains rules for specific cellular automata. Each `/rules` module exports a `Rules` object (defined in `/util/types.ts`, which contains the information necessary to define and draw a specific cellular automaton:
+
+- `transitionFunction` - its transition function
+- `cellColors` - a Map defining which cell states correspond to which colors
+- `maxInitialCellValue` - whether cell states are initially 0 or randomly-populated from a range of integers
+
+At creation, the static method `Controller.createControllerFromRules()` is passed a `Rules` object, as well as the canvas and size of cells to draw, and uses these to create a `Controller` which has:
+
+- a `CellularAutomaton` on a grid fitted to the canvas, with the given transition function and initial cell states.
+- a `Drawing` which uses the coloring rules of the specific cellular automaton.
+
+This means changing which cellular automaton this application uses is as simple as changing which `Rules` we pass the `Controller` at initialization &mdash; the `Controller` automatically handles everything else.
 
 ## Usage
 
