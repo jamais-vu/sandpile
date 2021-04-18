@@ -1,4 +1,4 @@
-import { getRandomElement } from '../util/random';
+import { getRandomElement } from '../util/random.js';
 /* Recursive implementation of the sandpile step.
  *
  * We start by calling `step()`, which adds a grain to a random vertex.

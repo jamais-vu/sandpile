@@ -1,22 +1,41 @@
+import { CellularAutomaton } from './CellularAutomaton.js';
 import { Drawing } from './Drawing.js';
+import { createGridFittedToCanvas } from './grid.js';
 import { updatePauseButton, updateStepCountText } from './html-helpers.js';
-/** Layer between the user interface and the model.
- * Separates the CellularAutomaton from the Drawing.
+/** Layer between the user interface and the CellularAutomaton/Drawing.
+ * Passes data from the CellularAutomaton to the Drawing for rendering on canvas.
+ * TODO: Docs
  */
 export class Controller {
     /** Create a Controller.
      * @param {HTMLCanvasElement} canvas
      * @param {CellularAutomaton} CA
-     * @param {number} cellsize - The size (px) of square cells to draw.
-     * @param {Map<number, string>} cellColors - A Map of cell states to fillStyle RGB strings.
-     * @param {number} delay - The time (ms) between each animation frame.
+     * @param {Drawing} drawing
      */
-    constructor(canvas, CA, cellSize, cellColors) {
+    constructor(canvas, CA, drawing) {
         this.canvas = canvas;
         this.CA = CA;
-        this.drawing = new Drawing(canvas.getContext('2d'), cellSize, cellColors);
-        this.delay = 0;
+        this.drawing = drawing;
+        this.delay = 0; // For now we don't use delay, just render next frame immediately.
         this.drawingPaused = true;
+    }
+    /** Creates a Controller, with new CellularAutomaton and Drawing instances,
+     * from a canvas, cellular automaton rules, and cell size.
+     * @param {HTMLCanvasElement} canvas - The canvas on which we draw the grid of cells.
+     * @param {Rules} rules - Rules object defining how the cellular automaton
+     *   should behave: the maximum initial value its cell should have, the color
+     *   each cell state should be drawn with, and its transition function.
+     * @param {cellSize} number - The size in pixels of the square cells we draw.
+     */
+    static createControllerFromRules(canvas, rules, cellSize) {
+        /* Create a grid fitted to the canvas with the given cellSize. */
+        const grid = createGridFittedToCanvas(canvas, cellSize, rules.maxInitialCellValue);
+        /* Then create a CellularAutomaton instance with that grid and the
+         * transition function from the cellular automaton rules. */
+        const CA = new CellularAutomaton(grid, rules.transitionFunction);
+        /* Create a Drawing for the canvas with given cellSize and cellColors. */
+        const drawing = new Drawing(canvas.getContext('2d'), cellSize, rules.cellColors);
+        return new Controller(canvas, CA, drawing);
     }
     /** Draws the gridlines and calls the animation loop.*/
     animationStart() {

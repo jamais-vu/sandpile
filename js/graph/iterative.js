@@ -1,4 +1,4 @@
-import { getRandomElement } from '../util/random';
+import { getRandomElement } from '../util/random.js';
 // TODO: This uses a lot of the same logic as the recursive implementation.
 // Maybe we could factor that out. Or maybe I just don't use the recursive
 // one, since it hits the call stack limit pretty fast.

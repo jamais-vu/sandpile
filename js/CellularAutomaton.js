@@ -1,4 +1,4 @@
-import { copyGrid } from './grid.js';
+import { newZerosGrid } from './grid.js';
 // TODO: Generic typing is to support further args for transition function.
 // Defining the class `CellularAutomaton<InputT = void>`, with `void` by default so it's optional,
 // would allow us to type it for transitionFunction inputs, instead of `any`.
@@ -25,6 +25,12 @@ export class CellularAutomaton {
          * always `n - 1`, or if step = 0, the history is empty. */
         this.history = [];
     }
+    /** Create a CellularAutomaton with a rows x cols grid of zeros, and the given
+     * transition function.
+     */
+    static createEmptyCellularAutomaton(rows, cols, transitionFunction) {
+        return new CellularAutomaton(newZerosGrid(rows, cols), transitionFunction);
+    }
     /** Moves the grid state backward one step. If at step 0, does nothing.
      * @modifies {this.grid}
      * @modifies {this.step}
@@ -43,11 +49,11 @@ export class CellularAutomaton {
      * @modifies {this.history}
      */
     nextStep() {
-        /* We push a deep copy to history because the transition function we use
-         * mutates grid, doesn't just return a new grid. In fact we don't really
-         * need the return value due ot that. */
-        this.history.push(copyGrid(this.grid));
-        this.transitionFunction(this.grid);
+        /* Because transitionFunction returns a new grid rather than modifies the
+         * existing grid, we can push `this.grid` to history and then set `this.grid`
+         * to the newly-returned grid without problems. */
+        this.history.push(this.grid);
+        this.grid = this.transitionFunction(this.grid);
         this.step += 1;
     }
     /** Transitions grid state to step n, via calls to nextStep/previousStep.

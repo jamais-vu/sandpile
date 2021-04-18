@@ -1,4 +1,4 @@
-import { Point } from './Point';
+import { Point } from './Point.js';
 /* A Vertex in the sandpile. */
 export class Vertex extends Point {
     /* Initially a Vertex has no neighbors. We set these after creation. */

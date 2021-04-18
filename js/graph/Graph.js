@@ -1,4 +1,4 @@
-import { HashMap } from './HashMap';
+import { HashMap } from './HashMap.js';
 // TODO: Not really sure what I want from this class.
 /* A Graph, implemented as a HashMap of Vertex hashes to Vertices.
  *

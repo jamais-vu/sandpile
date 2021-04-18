@@ -1,5 +1,25 @@
-import { getNeighborCoords } from './util/getNeighborCoords.js';
-import { getRandomInteger } from './util/random.js';
+import { getNeighborCoords } from '../util/getNeighborCoords.js';
+import { copyGrid } from '../grid.js';
+import { getRandomInteger } from '../util/random.js';
+/** @fileoverview Rules for the for Abelian Sandpile transition function.
+ * `transition()` is a wrapper for determining the next state of the grid. The
+ * various steps in the transition are non-pure functions, so `transition()`
+ * creates a copy of the given grid. This permits `transition()` to be treated
+ * as a pure function, so we can export it without worrying about mutation. */
+/* Cells are colored yellow (it is a sandpile after all).
+ * We divide 255 by cellState to determine how dark the cell color is.
+ * The brighter a cell is, the more grains it has.
+ * Except for white, which means the cell has 0 grains. */
+const cellColors = new Map([
+    [1, `rgb(${255 / 3}, ${255 / 3}, 0)`],
+    [2, `rgb(${255 / 2}, ${255 / 2}, 0)`],
+    [3, `rgb(255, 255, 0)`],
+]);
+export const rules = {
+    maxInitialCellValue: 0,
+    cellColors: cellColors,
+    transitionFunction: transition,
+};
 /* TODO: Future: consolidate these into something which gives us more flexibility.
  * Ideally we could create a transition function which passes options to several
  * of the helper functions we have here. */
@@ -9,25 +29,27 @@ import { getRandomInteger } from './util/random.js';
 /* TODO: I don't exporting every function for tests.
  * Makes it difficult to tell which functions are used in non-test modules.
  * Find a solution. */
-/* TODO: How to handle mutation/returns in transition functions?
- * This is pretty messy and confusing. Right now the CellularAutomaton class
- * just deep copies the grid prior to transitioning, to store previous states. */
-let BOUNDS = {};
 /** Goes through one "stable, add grain, topple until stable" iteration.
  * This assumes the given grid is stable (but works in either case? IDK).
  *
  * By default adds grains to the center. Optional arg 'random' will instead add
  * to random vertex.
- * @modifies {grid}
+ *
+ * Grid is not mutated. A copy of the given grid is created, and then modified
+ * according to the sandpile's transition rules.
  */
 export function transition(grid, addGrainFunctionName) {
+    let nextGrid = copyGrid(grid);
+    /* Add one grain to the grid. */
     if (addGrainFunctionName === 'random') {
-        addGrainRandom(grid);
+        addGrainRandom(nextGrid);
     }
     else {
-        addGrainCenter(grid);
+        addGrainCenter(nextGrid);
     }
-    toppleUntilStable(grid);
+    /* Then find and return the stable configuration. */
+    toppleUntilStable(nextGrid);
+    return nextGrid;
 }
 /** Adds one grain to the center of the grid.
  * For example, a 5x7 grid has the center (2, 3).

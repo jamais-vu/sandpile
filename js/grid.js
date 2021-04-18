@@ -1,5 +1,18 @@
+import { minusOneIfEven } from './util/minusOneIfEven.js';
 import { randomIntegerArray } from './util/random.js';
-/* Grid functions unrelated to any cellular automata rules. */
+/** @fileoverview Grid functions unrelated to any cellular automata rules. */
+/** Returns a grid fitted to the canvas, as determined by given cell size in pixels.
+ * The grid is randomly-populated with values between 0 and maxCellValue.
+ * If maxCellValue is 0, then the grid will be all zeros.
+ *
+ * TODO: We make sure the rows and cols are odd numbers for the sandpile, since
+ * we add grains to the center. But this can be an optional arg.
+ */
+export function createGridFittedToCanvas(canvas, cellSize, maxCellValue = 0) {
+    const rows = minusOneIfEven(Math.floor(canvas.height / cellSize));
+    const cols = minusOneIfEven(Math.floor(canvas.width / cellSize));
+    return newRandomGrid(rows, cols, maxCellValue);
+}
 /** Returns a rows x cols Grid of zeros.
  * @nosideffects
  */
@@ -11,13 +24,13 @@ export function newZerosGrid(rows, cols) {
     return grid;
 }
 /** Returns a rows x cols Grid of random values.
- * Each cell has a random integer value v, where 0 <= v <= maxHeight - 1.
+ * Each cell has a random integer value v, where 0 <= v <= n.
  * @nosideffects
  */
-export function newRandomGrid(rows, cols, maxHeight = 4) {
+export function newRandomGrid(rows, cols, n) {
     let grid = [];
     for (let i = 0; i < rows; i++) {
-        grid.push(randomIntegerArray(0, maxHeight - 1, cols));
+        grid.push(randomIntegerArray(0, n, cols));
     }
     return grid;
 }
@@ -43,6 +56,9 @@ export function sumGrid(grid) {
     }
     return sum;
 }
+/* NOTE: EVerything below this line is experimental. Not in production. */
+// This is for constraining the grid indices we check, so we only spend time
+// checking indices which could possibly be non-empty.
 /** Returns the outermost i and j indices which are nonempty.)
  *
  * This is ONLY valid for sandpile grids where we add grains to the center. It

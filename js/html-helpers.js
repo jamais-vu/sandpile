@@ -1,4 +1,20 @@
 // TODO: How do we work with HTML and TypeScript? There's got to be a better way.
+/** Fits the canvas to the window size, as a square or rectangle. */
+export function fitCanvasToWindow(canvas, square = true) {
+    const fittedCanvasHeight = (window.innerHeight - canvas.offsetTop);
+    const fittedCanvasWidth = window.innerWidth - canvas.offsetLeft;
+    if (square === true) {
+        /* We make the canvas a square, using the lesser of its height and width. */
+        const canvasSize = Math.min(fittedCanvasWidth, fittedCanvasHeight);
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
+    }
+    else {
+        /* We make the canvas a rectangle fitted to the window. */
+        canvas.width = fittedCanvasWidth;
+        canvas.height = fittedCanvasHeight;
+    }
+}
 const stepInput = document.getElementById('stepInput');
 const stepInputSubmit = document.getElementById('stepInputSubmit');
 const pauseButtonElement = document.getElementById('pauseButton');
@@ -6,7 +22,7 @@ const stepCountTextElement = document.getElementById('stepCountText');
 const windowSizeAlertElement = document.getElementById('windowSizeAlert');
 const canvasMouseCoords = document.getElementById('canvasMouseCoords');
 const canvasMouseCell = document.getElementById('canvasMouseCell');
-/* Adds event listeners for the given Drawing instance. */
+/* Adds event listeners for the given Controller instance. */
 export function addEventListeners(controller) {
     /* Pauses/unpauses grid transition. */
     pauseButtonElement.addEventListener('click', () => {
@@ -21,10 +37,14 @@ export function addEventListeners(controller) {
             controller.goToStep(desiredStep);
         }
     });
-    /* Disable pressing "Enter" key on step input, since that causes page reload. */
+    /* Pressing "Enter" goes to inputted step without reloading page. */
     stepInput.addEventListener('keydown', (event) => {
         if (event.code === 'Enter') {
-            event.preventDefault();
+            event.preventDefault(); // Disable button submit, which would reload page
+            const desiredStep = parseInt(stepInput.value);
+            if (!isNaN(desiredStep)) {
+                controller.goToStep(desiredStep);
+            }
         }
     });
     // canvas.addEventListener('mousemove', (event: MouseEvent) => {
@@ -50,10 +70,7 @@ export function windowSizeCheck(width, height) {
         windowSizeAlertElement.innerHTML = '<div>(Best viewed in a larger window! <a href="">Reload</a> the page after resizing.)</div>';
     }
 }
-/* Shows the xy and ij position of the mouse as it moves on the canvas.
- *
- * This information is displayed in the `debugInfoTable` element.
- */
+/* Shows the xy and ij position of the mouse as it moves on the canvas. */
 export function updateCanvasMouseCoords(event, cellSize) {
     const mouseCell = getCellFromCoords(event.offsetX, event.offsetY, cellSize);
     canvasMouseCoords.innerHTML = `${event.offsetX}, ${event.offsetY}`;

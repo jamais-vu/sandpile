@@ -1,5 +1,5 @@
-import { Vertex } from './Vertex';
-import { HashMap } from './HashMap';
+import { Vertex } from './Vertex.js';
+import { HashMap } from './HashMap.js';
 // TODO: For the true graph version of the sandpile, we want a sink vertex.
 // TODO: It's confusing we give the LatticeGraph rows and cols, but then use
 //       x and y values, since x is cols and y is rows.
