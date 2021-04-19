@@ -203,7 +203,7 @@ I want to do this because it's a neat solution, and I'd like to become more fami
 ![](./images/sandpile-symmetry.png "symmetries of the sandpile")<br>
 <sub>*Symmetries of the Abelian Sandpile*</sub>
 
-When adding grains to the center, the sandpile exhibits reflection symmetry over the axes, and (on a square grid) fourfold rotational symmetry. This means we only need to consider the origin, positive x and y axes, and one quadrant; then we can transform the quadrant to create the remainder of the sandpile. This would effectively cut down computing transitions by 1/4. 
+When adding grains to the center, the sandpile exhibits reflection symmetry over the axes, and (on a square grid) fourfold rotational symmetry. This means we only need to consider the origin, positive x and y axes, and one quadrant; then we can transform the quadrant to create the remainder of the sandpile. This would effectively cut down the drawing iteration by 3/4, and possibly offer optimizations for computing transitions. 
 
 #### Status
 
